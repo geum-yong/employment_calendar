@@ -1,4 +1,6 @@
+import moment from 'moment';
 import styled from 'styled-components';
+import Day from './Day';
 
 const CalendarBox = styled.div`
   border: 1px solid #eee;
@@ -27,35 +29,11 @@ const CalendarRow = styled.div`
   &:not(:last-child) {
     border-bottom: 1px solid #eee;
   }
-
-  .day-box {
-    flex: 1;
-
-    &:not(:last-child) {
-      border-right: 1px solid #eee;
-    }
-
-    .day-num {
-      padding: 5px 0 4px;
-      background-color: rgb(245, 245, 245);
-      text-align: center;
-      border-bottom: 1px solid #eee;
-      font-size: 14px;
-    }
-
-    .day-contents {
-      padding: 5px;
-      min-height: 50px;
-    }
-  }
 `;
 
 const DAYS = ['일', '월', '화', '수', '목', '금', '토'];
 
-const CalendarGrid = ({ date }) => {
-  const firstWeek = date.clone().startOf('month').week();
-  const lastWeek = date.clone().endOf('month').week() === 1 ? 53 : date.clone().endOf('month').week();
-
+const CalendarGrid = ({ date, currentList, firstWeek, lastWeek }) => {
   const calendarArr = () => {
     const result = [];
 
@@ -72,14 +50,9 @@ const CalendarGrid = ({ date }) => {
         .fill(0)
         .map((_, i) => {
           const current = date.clone().week(week).startOf('week').add(i, 'day');
-          const isSelected = date.format('YYYYMMDD') === current.format('YYYYMMDD') ? 'selected' : '';
+          const isSelected = moment().format('YYYYMMDD') === current.format('YYYYMMDD') ? 'selected' : '';
 
-          return (
-            <div className='day-box' key={current.format('YYYYMMDD')}>
-              <p className='day-num'>{current.format('D')}</p>
-              <div className='day-contents'>test</div>
-            </div>
-          );
+          return <Day key={current.format('YYYYMMDD')} current={current} currentList={currentList} isSelected={isSelected} />;
         })}
     </CalendarRow>
   );
