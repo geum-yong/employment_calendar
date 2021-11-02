@@ -61,7 +61,7 @@ const DayBox = styled.div`
   }
 `;
 
-const Day = ({ current, currentList, isSelected }) => {
+const Day = ({ current, currentList, isSelected, setModal }) => {
   const startCompanyArr = currentList
     .filter(company => moment(company.start_time).startOf('day').isSame(current.format('YYYY-MM-DD')))
     .sort((company1, company2) => {
@@ -78,6 +78,10 @@ const Day = ({ current, currentList, isSelected }) => {
       return 0;
     });
 
+  const onViewModal = company => () => {
+    setModal({ isView: true, current: company });
+  };
+
   return (
     <DayBox className='day-box'>
       <p className='day-num'>
@@ -85,12 +89,12 @@ const Day = ({ current, currentList, isSelected }) => {
       </p>
       <div className='day-contents'>
         {startCompanyArr.map(company => (
-          <button key={company.id} className='company-button start-company'>
+          <button key={company.id} className='company-button start-company' onClick={onViewModal(company)}>
             {company.name}
           </button>
         ))}
         {endCompanyArr.map(company => (
-          <button key={company.id} className='company-button end-company'>
+          <button key={company.id} className='company-button end-company' onClick={onViewModal(company)}>
             {company.name}
           </button>
         ))}

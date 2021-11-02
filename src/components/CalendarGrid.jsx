@@ -33,7 +33,7 @@ const CalendarRow = styled.div`
 
 const DAYS = ['일', '월', '화', '수', '목', '금', '토'];
 
-const CalendarGrid = ({ date, currentList, firstWeek, lastWeek }) => {
+const CalendarGrid = ({ date, currentList, firstWeek, lastWeek, setModal }) => {
   const calendarArr = () => {
     const result = [];
 
@@ -52,7 +52,7 @@ const CalendarGrid = ({ date, currentList, firstWeek, lastWeek }) => {
           const current = date.clone().week(week).startOf('week').add(i, 'day');
           const isSelected = moment().format('YYYYMMDD') === current.format('YYYYMMDD') ? 'selected' : '';
 
-          return <Day key={current.format('YYYYMMDD')} current={current} currentList={currentList} isSelected={isSelected} />;
+          return <Day key={current.format('YYYYMMDD')} current={current} currentList={currentList} isSelected={isSelected} setModal={setModal} />;
         })}
     </CalendarRow>
   );

@@ -4,16 +4,29 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CalendarGrid from '../components/CalendarGrid';
 import CalendarHeader from '../components/CalendarHeader';
+import CompanyModal from '../components/CompanyModal';
 
 const Container = styled.div`
   margin: 0 auto;
-  width: 1000px;
+  width: 100%;
+  max-width: 1000px;
 `;
 
 const Calendar = () => {
   const [date, setDate] = useState(moment());
   const [list, setList] = useState([]);
   const [currentList, setCurrentList] = useState([]);
+  const [modal, setModal] = useState({
+    isView: false,
+    current: {
+      id: '',
+      image: '',
+      name: '',
+      start_time: '',
+      end_time: '',
+      content: ``,
+    },
+  });
 
   const firstWeek = date.clone().startOf('month').week();
   const lastWeek = date.clone().endOf('month').week() === 1 ? 53 : date.clone().endOf('month').week();
@@ -39,7 +52,8 @@ const Calendar = () => {
   return (
     <Container>
       <CalendarHeader date={date} setDate={setDate} />
-      <CalendarGrid date={date} currentList={currentList} firstWeek={firstWeek} lastWeek={lastWeek} />
+      <CalendarGrid date={date} currentList={currentList} firstWeek={firstWeek} lastWeek={lastWeek} setModal={setModal} />
+      {modal.isView && <CompanyModal current={modal.current} setModal={setModal} />}
     </Container>
   );
 };
