@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import moment from 'moment';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -22,9 +20,7 @@ const Header = styled.div`
   }
 `;
 
-const CalendarHeader = () => {
-  const [date, setDate] = useState(moment());
-
+const CalendarHeader = ({ date, setDate }) => {
   // 이전달 버튼 클릭
   const onPriviousButton = () => {
     setDate(date.clone().subtract(1, 'month'));
