@@ -1,5 +1,7 @@
+import Container from '../components/Container';
+
 const Calendar = () => {
-  return <div>testtest</div>;
+  return <Container>testtest</Container>;
 };
 
 export default Calendar;
