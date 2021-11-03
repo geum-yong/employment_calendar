@@ -23,12 +23,12 @@ const Header = styled.div`
 const CalendarHeader = ({ date, setDate }) => {
   // 이전달 버튼 클릭
   const onPriviousButton = () => {
-    setDate(date.clone().subtract(1, 'month'));
+    setDate(date.subtract(1, 'month'));
   };
 
   // 다음달 버튼 클릭
   const onNextButton = () => {
-    setDate(date.clone().add(1, 'month'));
+    setDate(date.add(1, 'month'));
   };
 
   return (

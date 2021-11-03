@@ -1,10 +1,15 @@
 import axios from 'axios';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CalendarGrid from '../components/CalendarGrid';
 import CalendarHeader from '../components/CalendarHeader';
 import CompanyModal from '../components/CompanyModal';
+
+dayjs.extend(isBetween);
+dayjs.extend(weekOfYear);
 
 const Container = styled.div`
   margin: 0 auto;
@@ -13,7 +18,7 @@ const Container = styled.div`
 `;
 
 const Calendar = () => {
-  const [date, setDate] = useState(moment());
+  const [date, setDate] = useState(dayjs());
   const [list, setList] = useState([]);
   const [currentList, setCurrentList] = useState([]);
   const [modal, setModal] = useState({
@@ -28,10 +33,10 @@ const Calendar = () => {
     },
   });
 
-  const firstWeek = date.clone().startOf('month').week();
-  const lastWeek = date.clone().endOf('month').week() === 1 ? 53 : date.clone().endOf('month').week();
-  const firstDay = date.clone().week(firstWeek).startOf('week');
-  const lastDay = date.clone().week(lastWeek).endOf('week');
+  const firstWeek = date.startOf('month').week();
+  const lastWeek = date.endOf('month').week() === 1 ? 53 : date.clone().endOf('month').week();
+  const firstDay = date.week(firstWeek).startOf('week');
+  const lastDay = date.week(lastWeek).endOf('week');
 
   useEffect(() => {
     const getList = async () => {
@@ -43,7 +48,7 @@ const Calendar = () => {
   }, []);
 
   useEffect(() => {
-    const selectedList = list.filter(item => moment(item.start_time).isBetween(firstDay, lastDay) || moment(item.end_time).isBetween(firstDay, lastDay));
+    const selectedList = list.filter(item => dayjs(item.start_time).isBetween(firstDay, lastDay) || dayjs(item.end_time).isBetween(firstDay, lastDay));
     setCurrentList(selectedList);
   }, [date, list]);
 

@@ -1,6 +1,6 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import styled from 'styled-components';
 
 const ModalBox = styled.div`
@@ -94,8 +94,8 @@ const CompanyModal = ({ current, setModal }) => {
   };
 
   const diffDay = () => {
-    const endDate = moment(current.end_time).startOf('day');
-    const today = moment().startOf('day');
+    const endDate = dayjs(current.end_time).startOf('day');
+    const today = dayjs().startOf('day');
 
     // 마감일 지나기 전
     if (endDate.isAfter(today)) {
@@ -120,7 +120,7 @@ const CompanyModal = ({ current, setModal }) => {
           <div className='company-info-box'>
             <p className='company-name'>{current.name}</p>
             <p className='company-date'>
-              {moment(current.start_time).format('YYYY.MM.DD HH:mm')} ~ {moment(current.end_time).format('YYYY.MM.DD HH:mm')}
+              {dayjs(current.start_time).format('YYYY.MM.DD HH:mm')} ~ {dayjs(current.end_time).format('YYYY.MM.DD HH:mm')}
               <span className='diff-day'>({diffDay()})</span>
             </p>
           </div>

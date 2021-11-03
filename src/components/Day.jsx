@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import styled from 'styled-components';
 
 const DayBox = styled.div`
@@ -63,7 +63,7 @@ const DayBox = styled.div`
 
 const Day = ({ current, currentList, isSelected, setModal }) => {
   const startCompanyArr = currentList
-    .filter(company => moment(company.start_time).startOf('day').isSame(current.format('YYYY-MM-DD')))
+    .filter(company => dayjs(company.start_time).startOf('day').isSame(current.format('YYYY-MM-DD')))
     .sort((company1, company2) => {
       if (company1.name < company2.name) return -1;
       if (company1.name > company2.name) return 1;
@@ -71,7 +71,7 @@ const Day = ({ current, currentList, isSelected, setModal }) => {
     });
 
   const endCompanyArr = currentList
-    .filter(company => moment(company.end_time).startOf('day').isSame(current.format('YYYY-MM-DD')))
+    .filter(company => dayjs(company.end_time).startOf('day').isSame(current.format('YYYY-MM-DD')))
     .sort((company1, company2) => {
       if (company1.name < company2.name) return -1;
       if (company1.name > company2.name) return 1;

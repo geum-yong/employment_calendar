@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import styled from 'styled-components';
 import Day from './Day';
 
@@ -50,7 +50,7 @@ const CalendarGrid = ({ date, currentList, firstWeek, lastWeek, setModal }) => {
         .fill(0)
         .map((_, i) => {
           const current = date.clone().week(week).startOf('week').add(i, 'day');
-          const isSelected = moment().format('YYYYMMDD') === current.format('YYYYMMDD') ? 'selected' : '';
+          const isSelected = dayjs().format('YYYYMMDD') === current.format('YYYYMMDD') ? 'selected' : '';
 
           return <Day key={current.format('YYYYMMDD')} current={current} currentList={currentList} isSelected={isSelected} setModal={setModal} />;
         })}
